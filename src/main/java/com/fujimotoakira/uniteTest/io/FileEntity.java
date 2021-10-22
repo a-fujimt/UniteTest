@@ -19,6 +19,11 @@ public class FileEntity {
         this.contents = Files.readString(path);
     }
 
+    public FileEntity(String path) throws IOException {
+        this.path = path;
+        this.contents = Files.readString(Path.of(path));
+    }
+
     public String getPath() {
         return path;
     }
