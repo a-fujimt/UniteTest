@@ -16,8 +16,7 @@ class TreeManagerTest {
         // クラスローダでファイルの位置を指定する
         String path = JdtAnalyzerTest.class.getClassLoader().getResource("exampleTests").getPath();
         final TreeManager treeManager = new TreeManager(path);
-        final CompilationUnit uniteCompilationUnit = treeManager.unite();
-        assertEquals(15, ((TypeDeclaration) uniteCompilationUnit.types().get(0)).bodyDeclarations().size());
+        assertEquals(5, treeManager.getFileEntities().size());
     }
 
     @Test
