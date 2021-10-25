@@ -23,7 +23,18 @@ public class TreeManager {
         this.path = path;
 
         final List<Path> testsPath = TestCollection.getTestsPath(path);
-        for (Path testPath: testsPath) {
+        collectTests(testsPath);
+    }
+
+    public TreeManager(String path, String keyword) throws IOException {
+        this.path = path;
+
+        final List<Path> testsPath = TestCollection.getTestsPath(path, keyword);
+        collectTests(testsPath);
+    }
+
+    private void collectTests(List<Path> testsPath) throws IOException {
+        for (Path testPath : testsPath) {
             fileEntities.add(new FileEntity(testPath));
         }
 
@@ -66,6 +77,10 @@ public class TreeManager {
 
         final CompilationUnit newCompilationUnit = new JdtAnalyzer(new FileEntity(path, document.get())).getCompilationUnit();
         return newCompilationUnit;
+    }
+
+    public List<FileEntity> getFileEntities() {
+        return fileEntities;
     }
 
     class MethodDeleteVisitor extends ASTVisitor {

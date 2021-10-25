@@ -14,4 +14,11 @@ public class SourceWriter {
         Files.writeString(Path.of(path), sourceCode, Charset.defaultCharset());
     }
 
+    public static void write(String rootPath, String testPath, ASTNode ast) throws IOException {
+        final String[] split = testPath.split("/");
+        String filename = split[split.length - 1];
+        String outputPath = rootPath + "/" + filename;
+        write(outputPath, ast);
+    }
+
 }
