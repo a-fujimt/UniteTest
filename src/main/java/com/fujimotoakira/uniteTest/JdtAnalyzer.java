@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 public class JdtAnalyzer {
 
@@ -50,6 +49,10 @@ public class JdtAnalyzer {
         if (types.size() == 0)
             return null;
         return (TypeDeclaration) types.get(0);
+    }
+
+    public List getImportDeclarations() {
+        return compilationUnit.imports();
     }
 
 }

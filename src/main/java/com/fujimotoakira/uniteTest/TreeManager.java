@@ -18,6 +18,7 @@ public class TreeManager {
     private String path;
     private List<FileEntity> fileEntities = new ArrayList<>();
     private Map<String, List<ASTNode>> testMethodsMap = new LinkedHashMap<>();
+    private List<ImportDeclaration> importList = new ArrayList<>();
 
     public TreeManager(String path) throws IOException {
         this.path = path;
@@ -40,7 +41,10 @@ public class TreeManager {
 
         fileEntities.stream()
                 .map(JdtAnalyzer::new)
-                .forEach(e -> testMethodsMap.put(e.getFileEntity().getPath(), e.getTestMethods()));
+                .forEach(e -> {
+                    testMethodsMap.put(e.getFileEntity().getPath(), e.getTestMethods());
+                    addImports(e.getImportDeclarations());
+                });
     }
 
     public CompilationUnit unite() {
@@ -49,7 +53,7 @@ public class TreeManager {
         CompilationUnit compilationUnit = jdtAnalyzer.getCompilationUnit();
         TypeDeclaration typeDeclaration = jdtAnalyzer.getTypeDeclaration();
 
-        typeDeclaration.accept(new MethodDeleteVisitor()); // テストメソッドを一旦削除
+        compilationUnit.accept(new ContentDeleteVisitor()); // テストメソッドとimportを一旦削除
         final JdtAnalyzer newJdtAnalyzer = new JdtAnalyzer(new FileEntity("", compilationUnit.toString()));
         CompilationUnit templateCompilationUnit = newJdtAnalyzer.getCompilationUnit();
         TypeDeclaration templateTypeDeclaration = newJdtAnalyzer.getTypeDeclaration();
@@ -66,6 +70,9 @@ public class TreeManager {
             listRewrite.insertLast(m, null);
         }));
 
+        final ListRewrite importListRewrite = rewriter.getListRewrite(templateCompilationUnit, CompilationUnit.IMPORTS_PROPERTY);
+        importList.forEach(i -> importListRewrite.insertLast(i, null));
+
         TextEdit edits = rewriter.rewriteAST(document, null);
         try {
             edits.apply(document);
@@ -80,10 +87,30 @@ public class TreeManager {
         return fileEntities;
     }
 
-    class MethodDeleteVisitor extends ASTVisitor {
+    private void addImports(List<ImportDeclaration> imports) {
+        for (ImportDeclaration id: imports) {
+            boolean found = false;
+            for (ImportDeclaration existId: importList) {
+                if (id.getName().getFullyQualifiedName().equals(existId.getName().getFullyQualifiedName())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                importList.add(id);
+        }
+    }
+
+    class ContentDeleteVisitor extends ASTVisitor {
 
         @Override
         public boolean visit(MethodDeclaration node) {
+            node.delete();
+            return super.visit(node);
+        }
+
+        @Override
+        public boolean visit(ImportDeclaration node) {
             node.delete();
             return super.visit(node);
         }
