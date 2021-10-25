@@ -2,10 +2,7 @@ package com.fujimotoakira.uniteTest;
 
 import com.fujimotoakira.uniteTest.io.FileEntity;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.*;
 
 import java.util.List;
 
@@ -31,8 +28,19 @@ public class JdtAnalyzer {
         return (CompilationUnit) parser.createAST(new NullProgressMonitor());
     }
 
+    public FileEntity getFileEntity() {
+        return fileEntity;
+    }
+
     public CompilationUnit getCompilationUnit() {
         return compilationUnit;
+    }
+
+    public TypeDeclaration getTypeDeclaration() {
+        final List types = compilationUnit.types();
+        if (types.size() == 0)
+            return null;
+        return (TypeDeclaration) types.get(0);
     }
 
 }
