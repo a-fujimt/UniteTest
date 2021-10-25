@@ -3,6 +3,7 @@ package com.fujimotoakira.uniteTest.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class TestCollection {
     }
 
     public static List<Path> getTestsPath(String path) {
-        return getTestsPath(Path.of(path));
+        return getTestsPath(Paths.get(path));
     }
 
     public static List<Path> getTestPath(Path path, String keyword) {
@@ -35,7 +36,7 @@ public class TestCollection {
     }
 
     public static List<Path> getTestsPath(String path, String keyword) {
-        return getTestPath(Path.of(path), keyword);
+        return getTestPath(Paths.get(path), keyword);
     }
 
 }

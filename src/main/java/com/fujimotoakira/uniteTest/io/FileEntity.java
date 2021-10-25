@@ -3,6 +3,7 @@ package com.fujimotoakira.uniteTest.io;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileEntity {
 
@@ -16,12 +17,12 @@ public class FileEntity {
 
     public FileEntity(Path path) throws IOException {
         this.path = path.toString();
-        this.contents = Files.readString(path);
+        this.contents = new String(Files.readAllBytes(path));
     }
 
     public FileEntity(String path) throws IOException {
         this.path = path;
-        this.contents = Files.readString(Path.of(path));
+        this.contents = new String(Files.readAllBytes(Paths.get(path)));
     }
 
     public String getPath() {
