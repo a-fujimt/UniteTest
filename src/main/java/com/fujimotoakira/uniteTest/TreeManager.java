@@ -58,15 +58,13 @@ public class TreeManager {
         AST ast = templateTypeDeclaration.getAST();
         final ASTRewrite rewriter = ASTRewrite.create(ast);
         final ListRewrite listRewrite = rewriter.getListRewrite(templateTypeDeclaration, TypeDeclaration.BODY_DECLARATIONS_PROPERTY);
-        testMethodsMap.forEach((key, value) -> {
-            value.forEach(m -> {
-                MethodDeclaration md = (MethodDeclaration) m;
-                AST a = m.getAST();
-                String newMethodName = CtppTestNameGenerator.generate(key, md.getName().getIdentifier());
-                md.setName(a.newSimpleName(newMethodName));
-                listRewrite.insertLast(m, null);
-            });
-        });
+        testMethodsMap.forEach((key, value) -> value.forEach(m -> {
+            MethodDeclaration md = (MethodDeclaration) m;
+            AST a = m.getAST();
+            String newMethodName = CtppTestNameGenerator.generate(key, md.getName().getIdentifier());
+            md.setName(a.newSimpleName(newMethodName));
+            listRewrite.insertLast(m, null);
+        }));
 
         TextEdit edits = rewriter.rewriteAST(document, null);
         try {
@@ -75,8 +73,7 @@ public class TreeManager {
             e.printStackTrace();
         }
 
-        final CompilationUnit newCompilationUnit = new JdtAnalyzer(new FileEntity(path, document.get())).getCompilationUnit();
-        return newCompilationUnit;
+        return new JdtAnalyzer(new FileEntity(path, document.get())).getCompilationUnit();
     }
 
     public List<FileEntity> getFileEntities() {
