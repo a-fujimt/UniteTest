@@ -31,4 +31,15 @@ class TreeManagerTest {
         assertEquals(4, uniteCompilationUnit.imports().size());
     }
 
+    @Test
+    public void testUniteWithDifferentName() throws IOException {
+        String path = JdtAnalyzerTest.class.getClassLoader().getResource("patched_programs").getPath();
+        final String[] keywords = {"ESTest", "seed1"};
+        final String filename = "Hoge_ESTestSeed1.java";
+        final TreeManager treeManager = new TreeManager(path, keywords);
+        final CompilationUnit uniteCompilationUnit = treeManager.unite(filename);
+        final TypeDeclaration td = (TypeDeclaration) uniteCompilationUnit.types().get(0);
+        assertEquals("Hoge_ESTestSeed1", td.getName().getIdentifier());
+    }
+
 }

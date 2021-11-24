@@ -31,7 +31,7 @@ public class UniteTestMain {
     public void run(String path, String filename, String[] keywords) throws IOException {
         final TreeManager treeManager = keywords == null ?
                 new TreeManager(path) : new TreeManager(path, keywords);
-        final ASTNode astNode = treeManager.unite();
+        final ASTNode astNode = treeManager.unite(filename);
         final String testPath = filename != null ?
                 filename : treeManager.getFileEntities().get(0).getPath();
         SourceWriter.write(path, testPath, astNode);
