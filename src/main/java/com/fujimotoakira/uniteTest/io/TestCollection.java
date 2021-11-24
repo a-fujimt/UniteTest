@@ -31,10 +31,10 @@ public class TestCollection {
         return getTestsPath(path).stream()
                 .filter(e -> {
                     for (String keyword: keywords) {
-                        if (e.toString().contains(keyword))
-                            return true;
+                        if (!e.toString().contains(keyword))
+                            return false;
                     }
-                    return false;
+                    return true;
                 })
                 .collect(Collectors.toList());
     }

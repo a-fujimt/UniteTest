@@ -25,4 +25,20 @@ class TestCollectionTest {
         assertEquals(tests.size(), 2);
     }
 
+    @Test
+    public void testTestsListWithMultipleKeyword() {
+        String path = TestCollectionTest.class.getClassLoader().getResource("exampleTests").getPath();
+        String[] keywords = {"Keyword", "Example"};
+        final List<Path> tests = TestCollection.getTestsPath(path, keywords);
+        assertEquals(tests.size(), 1);
+    }
+
+    @Test
+    public void testTestsListWithMultipleKeyword2() {
+        String path = TestCollectionTest.class.getClassLoader().getResource("patched_programs").getPath();
+        String[] keywords = {"ESTest", "seed1"};
+        final List<Path> tests = TestCollection.getTestsPath(path, keywords);
+        assertEquals(tests.size(), 3);
+    }
+
 }
