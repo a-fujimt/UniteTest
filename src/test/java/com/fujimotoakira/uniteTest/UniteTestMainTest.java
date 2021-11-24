@@ -36,4 +36,11 @@ class UniteTestMainTest {
         assertNull(main.getOptions());
     }
 
+    @Test
+    public void testNoArguments() {
+        String[] arguments = {};
+        UniteTestMain main = new UniteTestMain();
+        assertThrows(CmdLineException.class, () -> main.parseArguments(arguments));
+    }
+
 }

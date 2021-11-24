@@ -1,7 +1,6 @@
 package com.fujimotoakira.uniteTest;
 
 import com.fujimotoakira.uniteTest.io.SourceWriter;
-import java.util.Arrays;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import java.io.IOException;
@@ -13,14 +12,17 @@ import org.kohsuke.args4j.spi.StringArrayOptionHandler;
 
 public class UniteTestMain {
 
-    @Argument
+    @Argument(required = true, metaVar = "directory containing tests")
     private String path;
 
-    @Option(name="-o", aliases="--output")
+    @Option(name = "-o", aliases = "--output", metaVar = "output test name")
     private String filename;
 
-    @Argument(index=1, handler=StringArrayOptionHandler.class)
+    @Argument(index = 1, handler = StringArrayOptionHandler.class, metaVar = "unite file keywords")
     private String[] options;
+
+    @Option(name = "-h", aliases = "--help")
+    private boolean showUsage;
 
     public static void main(String[] args) throws IOException, CmdLineException {
         new UniteTestMain().run(args);
@@ -39,6 +41,12 @@ public class UniteTestMain {
 
     void run(String[] args) throws CmdLineException, IOException {
         parseArguments(args);
+        if (showUsage) {
+            System.out.println("usage:");
+            new CmdLineParser(this).printUsage(System.out);
+            return;
+        }
+
         run(this.path, this.filename, this.options);
     }
 
