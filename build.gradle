@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.27.0'
+    implementation 'args4j:args4j:2.33'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
