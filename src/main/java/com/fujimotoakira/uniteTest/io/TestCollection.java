@@ -27,15 +27,20 @@ public class TestCollection {
         return getTestsPath(Path.of(path));
     }
 
-    public static List<Path> getTestPath(Path path, String keyword) {
-        List<Path> tests = getTestsPath(path).stream()
-                .filter(e -> e.toString().contains(keyword))
+    public static List<Path> getTestPath(Path path, String[] keywords) {
+        return getTestsPath(path).stream()
+                .filter(e -> {
+                    for (String keyword: keywords) {
+                        if (e.toString().contains(keyword))
+                            return true;
+                    }
+                    return false;
+                })
                 .collect(Collectors.toList());
-        return tests;
     }
 
-    public static List<Path> getTestsPath(String path, String keyword) {
-        return getTestPath(Path.of(path), keyword);
+    public static List<Path> getTestsPath(String path, String[] keywords) {
+        return getTestPath(Path.of(path), keywords);
     }
 
 }

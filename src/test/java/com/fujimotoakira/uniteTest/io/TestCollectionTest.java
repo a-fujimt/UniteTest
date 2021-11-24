@@ -20,7 +20,8 @@ class TestCollectionTest {
     @Test
     public void testTestsListWithKeyword() {
         String path = TestCollectionTest.class.getClassLoader().getResource("exampleTests").getPath();
-        final List<Path> tests = TestCollection.getTestsPath(path, "Keyword");
+        String[] keywords = {"Keyword"};
+        final List<Path> tests = TestCollection.getTestsPath(path, keywords);
         assertEquals(tests.size(), 2);
     }
 

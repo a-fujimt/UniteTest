@@ -27,10 +27,10 @@ public class TreeManager {
         collectTests(testsPath);
     }
 
-    public TreeManager(String path, String keyword) throws IOException {
+    public TreeManager(String path, String[] keywords) throws IOException {
         this.path = path;
 
-        final List<Path> testsPath = TestCollection.getTestsPath(path, keyword);
+        final List<Path> testsPath = TestCollection.getTestsPath(path, keywords);
         collectTests(testsPath);
     }
 
