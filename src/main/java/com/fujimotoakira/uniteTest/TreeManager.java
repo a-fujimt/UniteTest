@@ -27,10 +27,10 @@ public class TreeManager {
         collectTests(testsPath);
     }
 
-    public TreeManager(String path, String keyword) throws IOException {
+    public TreeManager(String path, String[] keywords) throws IOException {
         this.path = path;
 
-        final List<Path> testsPath = TestCollection.getTestsPath(path, keyword);
+        final List<Path> testsPath = TestCollection.getTestsPath(path, keywords);
         collectTests(testsPath);
     }
 
@@ -81,6 +81,15 @@ public class TreeManager {
         }
 
         return new JdtAnalyzer(new FileEntity(path, document.get())).getCompilationUnit();
+    }
+
+    public CompilationUnit unite(String filename) {
+        CompilationUnit compilationUnit = unite();
+        if (filename != null) {
+            String identifier = filename.split("\\.")[0];
+            ((TypeDeclaration) compilationUnit.types().get(0)).getName().setIdentifier(identifier);
+        }
+        return compilationUnit;
     }
 
     public List<FileEntity> getFileEntities() {
