@@ -13,8 +13,9 @@ public class TestCollection {
     public static List<Path> getTestsPath(Path path) {
         List<Path> tests = new ArrayList<>();
         try (Stream<Path> walk = Files.walk(path)) {
-            walk.filter(e -> Files.isRegularFile(e))
+            walk.filter(Files::isRegularFile)
                     .filter(e -> e.toString().endsWith("Test.java"))
+                    .sorted()
                     .forEach(tests::add);
         } catch (IOException e) {
             e.printStackTrace();
