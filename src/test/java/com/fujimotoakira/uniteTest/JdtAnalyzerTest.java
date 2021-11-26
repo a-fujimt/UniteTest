@@ -20,7 +20,7 @@ class JdtAnalyzerTest {
         FileEntity fileEntity = new FileEntity(path);
         JdtAnalyzer analyzer = new JdtAnalyzer(fileEntity);
         final CompilationUnit compilationUnit = analyzer.getCompilationUnit();
-        assertEquals(compilationUnit.getNodeType(), ASTNode.COMPILATION_UNIT);
+        assertEquals(ASTNode.COMPILATION_UNIT, compilationUnit.getNodeType());
     }
 
     @Test
@@ -29,9 +29,9 @@ class JdtAnalyzerTest {
         FileEntity fileEntity = new FileEntity(path);
         JdtAnalyzer analyzer = new JdtAnalyzer(fileEntity);
         final List<ASTNode> testMethods = analyzer.getTestMethods();
-        assertEquals(testMethods.size(), 3);
-        assertEquals(testMethods.get(0).getNodeType(), ASTNode.METHOD_DECLARATION);
-        assertEquals(((MethodDeclaration) testMethods.get(0)).getName().toString(), "test01");
+        assertEquals(3, testMethods.size());
+        assertEquals(ASTNode.METHOD_DECLARATION, testMethods.get(0).getNodeType());
+        assertEquals("test01", ((MethodDeclaration) testMethods.get(0)).getName().toString());
     }
 
 }

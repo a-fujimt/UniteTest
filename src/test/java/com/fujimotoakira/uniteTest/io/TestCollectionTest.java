@@ -14,7 +14,7 @@ class TestCollectionTest {
         // クラスローダでファイルの位置を指定する
         String path = TestCollectionTest.class.getClassLoader().getResource("exampleTests").getPath();
         final List<Path> tests = TestCollection.getTestsPath(path);
-        assertEquals(tests.size(), 5);
+        assertEquals(5, tests.size());
     }
 
     @Test
@@ -22,7 +22,7 @@ class TestCollectionTest {
         String path = TestCollectionTest.class.getClassLoader().getResource("exampleTests").getPath();
         String[] keywords = {"Keyword"};
         final List<Path> tests = TestCollection.getTestsPath(path, keywords);
-        assertEquals(tests.size(), 2);
+        assertEquals(2, tests.size());
     }
 
     @Test
@@ -30,7 +30,7 @@ class TestCollectionTest {
         String path = TestCollectionTest.class.getClassLoader().getResource("exampleTests").getPath();
         String[] keywords = {"Keyword", "Example"};
         final List<Path> tests = TestCollection.getTestsPath(path, keywords);
-        assertEquals(tests.size(), 1);
+        assertEquals(1, tests.size());
     }
 
     @Test
@@ -38,7 +38,7 @@ class TestCollectionTest {
         String path = TestCollectionTest.class.getClassLoader().getResource("patched_programs").getPath();
         String[] keywords = {"ESTest", "seed1"};
         final List<Path> tests = TestCollection.getTestsPath(path, keywords);
-        assertEquals(tests.size(), 3);
+        assertEquals(3, tests.size());
     }
 
 }

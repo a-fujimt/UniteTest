@@ -27,7 +27,7 @@ class TreeManagerTest {
         final TypeDeclaration td = (TypeDeclaration) uniteCompilationUnit.types().get(0);
         final MethodDeclaration md = (MethodDeclaration) td.bodyDeclarations().get(0);
         assertEquals("test01_Arja_0_seed1", md.getName().getIdentifier());
-        assertEquals(9, td.bodyDeclarations().size());
+        assertEquals(12, td.bodyDeclarations().size());
         assertEquals(4, uniteCompilationUnit.imports().size());
     }
 
